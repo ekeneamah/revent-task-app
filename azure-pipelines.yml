@@ -1,0 +1,71 @@
+# .azure-pipelines.yml
+
+trigger:
+  branches:
+    include:
+      - main
+
+stages:
+  - stage: Build
+    displayName: 'Build'
+    jobs:
+      - job: Build
+        displayName: 'Build Application'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+  - stage: Deploy
+    displayName: 'Deployment to Kubernetes'
+    dependsOn: Build
+    jobs:
+      - job: Deploy
+        displayName: 'Deploy to Kubernetes'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          # Download the scripts from secure storage
+          - script: |
+              echo "Downloading create_cluster.sh and create-postgress.sh scripts..."
+              az storage blob download --account-name storage_account_name --container-name script_container_name --name create_cluster.sh --file create_cluster.sh
+              az storage blob download --account-name storage_account_name --container-name script_container_name --name create-postgress.sh --file create-postgress.sh
+            displayName: 'Download deployment scripts'
+
+          # Execute the create_cluster.sh script
+          - script: |
+              chmod +x create_cluster.sh
+              ./create_cluster.sh
+            displayName: 'Create Kubernetes cluster'
+
+          # Execute the create-postgress.sh script
+          - script: |
+              chmod +x create-postgress.sh
+              ./create-postgress.sh
+            displayName: 'Setup PostgreSQL database'
+
+          # Build the Docker image
+          - script: |
+              docker build -t myapp:latest .
+            displayName: 'Build Docker image'
+
+          # Push the Docker image to a container registry
+          # Replace `myregistry.azurecr.io` with your own container registry
+          - script: |
+              docker login myregistry.azurecr.io -u myusername -p mypassword
+              docker tag myapp:latest myregistry.azurecr.io/myapp:latest
+              docker push myregistry.azurecr.io/myapp:latest
+            displayName: 'Push Docker image to container registry'
+
+          # Deploy the Kubernetes manifests
+          - script: |
+              # Replace `myapp.yaml` with the path to your Kubernetes deployment manifest
+              kubectl apply -f myapp.yaml
+            displayName: 'Deploy to Kubernetes'
+
+          # Clean up temporary resources (if applicable)
+          # Add cleanup steps as needed
+          # ...
+
