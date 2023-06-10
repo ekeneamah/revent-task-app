@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-dev
+  labels:
+    app: kube-dev
+  namespace: namespace-workflow-1686415489904
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-dev
+  template:
+    metadata:
+      labels:
+        app: kube-dev
+    spec:
+      containers:
+        - name: kube-dev
+          image: taskappdev.azurecr.io/image-workflow-1686415489904:latest
+          ports:
+            - containerPort: 3000
