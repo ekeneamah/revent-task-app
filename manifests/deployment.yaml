@@ -4,7 +4,7 @@ metadata:
   name: kube-dev
   labels:
     app: kube-dev
-  namespace: revenet-taskapp-namespace
+  namespace: revnet-taskapp-api-dev
 spec:
   replicas: 1
   selector:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: kube-dev
-          image: taskappdev.azurecr.io/image-workflow-1686415489904:latest
+          image: taskappdev.azurecr.io/revnet-taskapp-api-dev:latest
           ports:
             - containerPort: 3000
