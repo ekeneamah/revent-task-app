@@ -4,7 +4,7 @@ metadata:
   name: kube-dev
   labels:
     app: kube-dev
-  namespace: namespace-workflow-1686415489904
+  namespace: revenet-taskapp-namespace
 spec:
   replicas: 1
   selector:
