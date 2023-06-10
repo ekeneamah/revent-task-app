@@ -1,0 +1,34 @@
+{
+  "name": "revent-task-api",
+  "version": "1.0.0",
+  "description": "Revent interview task - Write a simple REST API server to manage a task list.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azuredev-test/revent-task-api.git"
+  },
+  "keywords": [
+    "task",
+    "revent",
+    "api"
+  ],
+  "author": "Ekene Amah",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/azuredev-test/revent-task-api/issues"
+  },
+  "homepage": "https://github.com/azuredev-test/revent-task-api#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "passer": "^2.2.1",
+    "pg": "^8.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.42.0"
+  }
+}
