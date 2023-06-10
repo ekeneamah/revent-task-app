@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-dev
+  namespace: namespace-workflow-1686415489904
+spec:
+  type: LoadBalancer
+  selector:
+    app: kube-dev
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
