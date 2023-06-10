@@ -12,6 +12,7 @@ env:
     CONTAINER_NAME: image-workflow-1686429939241
     DEPLOYMENT_MANIFEST_PATH: |
         ./manifests/deployment.yaml
+        ./manifests/service.yaml
 jobs:
     buildImage:
         permissions:
