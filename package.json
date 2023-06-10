@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/azuredev-test/revent-task-api.git"
+    "url": "https://github.com/ekeneamah/revent-task-app.git"
   },
   "keywords": [
     "task",
@@ -20,9 +20,9 @@
   "author": "Ekene Amah",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/azuredev-test/revent-task-api/issues"
+    "url": "https://github.com/ekeneamah/revent-task-app/issues"
   },
-  "homepage": "https://github.com/azuredev-test/revent-task-api#readme",
+  "homepage": "https://github.com/ekeneamah/revent-task-appi#readme",
   "dependencies": {
     "dotenv": "^16.1.4",
     "express": "^4.18.2",

@@ -6,6 +6,6 @@ const router = Router();
 router.post('/', createTask);
 router.put('/:taskId', updateTask);
 router.delete('/:taskId', deleteTask);
-router.get('/', viewTasks);
+router.get('/', viewTasks.bind(taskController));
 
 export default router;

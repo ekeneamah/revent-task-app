@@ -1,42 +1,44 @@
 import { Task } from '../models/Task';
 
 class TaskService {
-  static async createTask(description) {
-    try {
-      const task = await Task.create(description);
-      return task;
-    } catch (error) {
-      console.error('Error creating task:', error);
-      throw new Error('An error occurred while creating the task');
-    }
-  }
+    async createTask(taskData) {
+        try {
+          return await Task.create(taskData);
+        } catch (error) {
+          throw new Error('Failed to create task');
+        }
+      }
 
-  static async updateTask(taskId, description) {
-    try {
-      const task = await Task.update(taskId, description);
-      return task;
-    } catch (error) {
-      console.error('Error updating task:', error);
-      throw new Error('An error occurred while updating the task');
-    }
-  }
+      async updateTask(id, taskData) {
+        try {
+          const task = await Task.findByPk(id);
+          if (!task) {
+            throw new Error('Task not found');
+          }
+          return await task.update(taskData);
+        } catch (error) {
+          throw new Error('Failed to update task');
+        }
+      }
 
-  static async deleteTask(taskId) {
-    try {
-      await Task.delete(taskId);
-    } catch (error) {
-      console.error('Error deleting task:', error);
-      throw new Error('An error occurred while deleting the task');
-    }
-  }
+      async deleteTask(id) {
+        try {
+          const task = await Task.findByPk(id);
+          if (!task) {
+            throw new Error('Task not found');
+          }
+          await task.destroy();
+          return true;
+        } catch (error) {
+          throw new Error('Failed to delete task');
+        }
+      }
 
-  static async getAllTasks() {
+  async getAllTasks() {
     try {
-      const tasks = await Task.getAll();
-      return tasks;
+      return await Task.findAll();
     } catch (error) {
-      console.error('Error retrieving tasks:', error);
-      throw new Error('An error occurred while retrieving the tasks');
+      throw new Error('Failed to fetch tasks');
     }
   }
 }
