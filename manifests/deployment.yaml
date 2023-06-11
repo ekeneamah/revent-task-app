@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kube-dev
+  name: taskapp-dev-automatic
   labels:
-    app: kube-dev
-  namespace: namespace-workflow-1686415489904
+    app: taskapp-dev-automatic
+  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kube-dev
+      app: taskapp-dev-automatic
   template:
     metadata:
       labels:
-        app: kube-dev
+        app: taskapp-dev-automatic
     spec:
       containers:
-        - name: kube-dev
-          image: taskappdev.azurecr.io/revnet-taskapp-api-dev:latest
+        - name: taskapp-dev-automatic
+          image: taskappdev.azurecr.io/image-workflow-1686443833571:latest
           ports:
             - containerPort: 3000
