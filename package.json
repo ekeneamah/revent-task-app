@@ -2,9 +2,11 @@
   "name": "revent-task-api",
   "version": "1.0.0",
   "description": "Revent interview task - Write a simple REST API server to manage a task list.",
+  "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "start": "node app.js",
+    "test": "jest",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -27,9 +29,14 @@
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "passer": "^2.2.1",
-    "pg": "^8.11.0"
+    "pg": "^8.11.0",
+    "sequelize": "^6.32.0"
   },
   "devDependencies": {
-    "eslint": "^8.42.0"
+    "@babel/preset-env": "^7.22.5",
+    "babel-jest": "^29.5.0",
+    "eslint": "^8.42.0",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }

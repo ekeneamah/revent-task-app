@@ -53,11 +53,16 @@ stages:
 
           # Push the Docker image to a container registry
           # Replace `myregistry.azurecr.io` with your own container registry
-          - script: |
-              docker login myregistry.azurecr.io -u myusername -p mypassword
-              docker tag myapp:latest myregistry.azurecr.io/myapp:latest
-              docker push myregistry.azurecr.io/myapp:latest
-            displayName: 'Push Docker image to container registry'
+            env:
+              ACR_USERNAME: ${{ secrets.ACR_USERNAME }}
+              ACR_PASSWORD: ${{ secrets.ACR_PASSWORD }} 
+
+                run: |
+                  echo "ACR_USERNAME=$ACR_USERNAME" >> $GITHUB_ENV
+                  echo "ACR_PASSWORD=$ACR_PASSWORD" >> $GITHUB_ENV
+                  - name: Login to Azure Container Registry
+              run: docker login myregistry.azurecr.io -u ${{ env.ACR_USERNAME }} -p ${{ env.ACR_PASSWORD }}
+          
 
           # Deploy the Kubernetes manifests
           - script: |

@@ -1,49 +1,45 @@
-import { createTask as _createTask, updateTask as _updateTask, deleteTask as _deleteTask, getAllTasks } from '../services/TaskService';
+const TaskService = require('../services/taskService');
 
 class TaskController {
-  static async createTask(req, res) {
-    const { description } = req.body;
+  async createTask(req, res) {
     try {
-      const task = await _createTask(description);
-      res.json(task);
+      const taskData = req.body;
+      const task = await TaskService.createTask(taskData);
+      res.status(201).json(task);
     } catch (error) {
-      console.error('Error creating task:', error);
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: 'Failed to create task' });
+    }
+  }
+  
+  async updateTask(req, res) {
+    try {
+      const taskId = req.params.id;
+      const taskData = req.body;
+      const task = await TaskService.updateTask(taskId, taskData);
+      res.status(200).json(task);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update task' });
     }
   }
 
-  static async updateTask(req, res) {
-    const { taskId } = req.params;
-    const { description } = req.body;
+  async deleteTask(req, res) {
     try {
-      const task = await _updateTask(taskId, description);
-      res.json(task);
+      const taskId = req.params.id;
+      await TaskService.deleteTask(taskId);
+      res.status(204).end();
     } catch (error) {
-      console.error('Error updating task:', error);
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: 'Failed to delete task' });
     }
   }
 
-  static async deleteTask(req, res) {
-    const { taskId } = req.params;
+  async viewTasks(req, res) {
     try {
-      await _deleteTask(taskId);
-      res.json({ message: 'Task deleted successfully' });
+      const tasks = await TaskService.getAllTasks();
+      res.status(200).json(tasks);
     } catch (error) {
-      console.error('Error deleting task:', error);
-      res.status(500).json({ error: error.message });
-    }
-  }
-
-  static async viewTasks(req, res) {
-    try {
-      const tasks = await getAllTasks();
-      res.json(tasks);
-    } catch (error) {
-      console.error('Error retrieving tasks:', error);
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: 'Failed to fetch tasks' });
     }
   }
 }
 
-export default TaskController;
+module.exports = new TaskController();

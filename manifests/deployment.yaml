@@ -1,22 +1,49 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kube-dev
-  labels:
-    app: kube-dev
-  namespace: namespace-workflow-1686415489904
+  name: task-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kube-dev
+      app: task-api
   template:
     metadata:
       labels:
-        app: kube-dev
+        app: task-api
     spec:
       containers:
-        - name: kube-dev
-          image: taskappdev.azurecr.io/revnet-taskapp-api-dev:latest
+        - name: task-api
+          image: revnet-taskapp-api-dev
+          resources:
+            limits:
+              cpu: "1"
+              memory: "1Gi"
           ports:
             - containerPort: 3000
+          env:
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: host
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: port
+            - name: POSTGRES_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: password
