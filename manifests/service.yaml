@@ -1,10 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
+<<<<<<< HEAD
   name: task-api
+=======
+  name: taskapp-dev-automatic
+  namespace: default
+>>>>>>> 1be1dd60cafc6fe0c2c1021a34f44af4f4eb3466
 spec:
   selector:
+<<<<<<< HEAD
     app: task-api
+=======
+    app: taskapp-dev-automatic
+>>>>>>> 1be1dd60cafc6fe0c2c1021a34f44af4f4eb3466
   ports:
     - protocol: TCP
       port: 80
